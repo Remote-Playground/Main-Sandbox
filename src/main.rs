@@ -1,33 +1,26 @@
+// Pseudo code
+// i -> Current index
+// difference = target - nums[i]
+// return value -> temp[difference], i]
 use std::collections::HashMap;
-use std::io::Result;
 
-fn main() -> Result<()> {
-    let mut data: HashMap<String, String> = HashMap::new();
-    insert_data_to_hashmap(&mut data);
-    display_data(&mut data);
-    validate_key_value(&data, "Data structure".to_string());
-    display_hashmap_length(&data);
-    Ok(())
+fn main() {
+    let mut temp: HashMap<i32, i32> = HashMap::new();
+
+    Solution::find_target(vec![12, 3, 33, 6], 18, temp);
 }
 
-fn insert_data_to_hashmap(data: &mut HashMap<String, String>) {
-    data.insert("Data structure".to_string(), "Hashmap".to_string());
-}
+struct Solution;
 
-fn display_data(data: &mut HashMap<String, String>) {
-    for (key, value) in data.iter_mut() {
-        println!("> {}: {}", key, value);
+impl Solution {
+    fn find_target(nums: Vec<i32>, target: i32, mut temp: HashMap<i32, i32>) {
+        for i in 0..nums.len() {
+            let difference = target - nums[i];
+            if temp.contains_key(&difference) {
+                println!("{:?}", vec![temp[&difference], i.to_string().parse::<i32>().unwrap()]);
+            } else {
+                temp.insert(*&nums[i], i.to_string().parse::<i32>().unwrap());
+            }
+        }
     }
-}
-
-fn validate_key_value(data: &HashMap<String, String>, key: String) {
-    if data.contains_key(&key) {
-        println!("Contains key: {}", key);
-        let key_value = data.get(&key).unwrap();
-        println!("Key value: {:?}", key_value);
-    }
-}
-
-fn display_hashmap_length(data: &HashMap<String, String>) {
-    println!("Length: {}", data.len());
 }
